@@ -2,6 +2,11 @@ import generator
 import file_handler as fh
 import os
 
+def print_m(A):
+    print("")
+    for row in A:
+        print(row)
+
 def save(A, A_inv, B, M):
     tasks = sorted(get_ids())
     id = 0
@@ -49,22 +54,22 @@ if __name__ == "__main__":
                     continue
                 A, A_inv, B, M = generator.generate(p, int(data[2]))
                 save(A, A_inv, B, M)
-                print(M)
+                print_m(M)
             except:
                 print("Invalid input")
         elif data[0] == "sol":
             try:
                 tsk = get_task(data[1])
-                print(tsk["A"])
-                print(tsk["A_inv"])
-                print(tsk["B"])
-                print(tsk["M"])
+                print_m(tsk["A"])
+                print_m(tsk["A_inv"])
+                print_m(tsk["B"])
+                print_m(tsk["M"])
             except:
                 print("Task not found")
         elif data[0] == "get":
             try:
                 tsk = get_task(data[1])
-                print(tsk["M"])
+                print_m(tsk["M"])
             except:
                 print("Task not found")
         elif data[0] == "ids":
@@ -74,3 +79,5 @@ if __name__ == "__main__":
                 del_task(data[1])
             except:
                 print("Task not found")
+        else:
+            print("Command does not exist")
