@@ -53,8 +53,7 @@ def random_inv_matrix(type, size):
     return a, a_inv
 
 def generate(type, size):
-    times = 5
-
+    times = 2 * size
     A = np.identity(size)
     A_inv = np.identity(size)
     for i in range(times):

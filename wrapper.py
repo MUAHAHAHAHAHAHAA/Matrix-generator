@@ -3,9 +3,13 @@ import file_handler as fh
 import os
 
 def print_m(A):
-    print("")
     for row in A:
-        print(row)
+        res = []
+        for entry in row:
+            res.append(str(int(entry)))
+        txt = " ".join(res)
+        print(txt)
+    print("")
 
 def save(A, A_inv, B, M):
     tasks = sorted(get_ids())
@@ -22,6 +26,7 @@ def save(A, A_inv, B, M):
         "M": M.tolist()
     }
     fh.set("data/" + str(id), data)
+    return id
 
 def get_task(id):
     return fh.get("data/" + id)
@@ -44,6 +49,7 @@ if __name__ == "__main__":
     while True:
         txt = input(">> ")
         data = txt.split(" ")
+
         if data[0] == "end":
             break
         elif data[0] == "generate":
@@ -53,22 +59,27 @@ if __name__ == "__main__":
                     print("Bad input")
                     continue
                 A, A_inv, B, M = generator.generate(p, int(data[2]))
-                save(A, A_inv, B, M)
-                print_m(M)
+                id = save(A, A_inv, B, M)
+                print("Saved in: " + str(id))
             except:
                 print("Invalid input")
         elif data[0] == "sol":
             try:
                 tsk = get_task(data[1])
+                print("A:")
                 print_m(tsk["A"])
+                print("A^-1:")
                 print_m(tsk["A_inv"])
+                print("B = A^-1 * M * A:")
                 print_m(tsk["B"])
+                print("M:")
                 print_m(tsk["M"])
             except:
                 print("Task not found")
         elif data[0] == "get":
             try:
                 tsk = get_task(data[1])
+                print("M:")
                 print_m(tsk["M"])
             except:
                 print("Task not found")
