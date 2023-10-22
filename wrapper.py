@@ -11,7 +11,7 @@ def print_m(A):
         print(txt)
     print("")
 
-def save(A, A_inv, B, M):
+def save(p, A, A_inv, B, M):
     tasks = sorted(get_ids())
     id = 0
     for vel in tasks:
@@ -20,6 +20,7 @@ def save(A, A_inv, B, M):
     tasks.append(id)
     set_ids(tasks)
     data = {
+        "char": p,
         "A": A.tolist(),
         "A_inv": A_inv.tolist(),
         "B": B.tolist(),
@@ -59,13 +60,14 @@ if __name__ == "__main__":
                     print("Bad input")
                     continue
                 A, A_inv, B, M = generator.generate(p, int(data[2]))
-                id = save(A, A_inv, B, M)
+                id = save(p, A, A_inv, B, M)
                 print("Saved in: " + str(id))
             except:
                 print("Invalid input")
         elif data[0] == "sol":
             try:
                 tsk = get_task(data[1])
+                print("characteristic: " + str(tsk["char"]))
                 print("A:")
                 print_m(tsk["A"])
                 print("A^-1:")
@@ -79,6 +81,7 @@ if __name__ == "__main__":
         elif data[0] == "get":
             try:
                 tsk = get_task(data[1])
+                print("characteristic: " + str(tsk["char"]))
                 print("M:")
                 print_m(tsk["M"])
             except:
